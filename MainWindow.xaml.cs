@@ -259,46 +259,6 @@ namespace Paint2
             ToolsBar.RoundYNow = Convert.ToDouble(textBoxRoundRectY.Text);
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-                SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Title = "Сохранить как";
-                sfd.OverwritePrompt = true;
-                sfd.CheckPathExists = true;
-                sfd.Filter = "Files(*.bin)|*.bin";
-                sfd.ShowDialog();
-                if (sfd.FileName != "")
-                {
-                    FileStream file = (FileStream)sfd.OpenFile();
-                    BinaryFormatter bin = new BinaryFormatter();
-                    bin.Serialize(file, ToolsBar.Figures);
-                    file.Close();
-                }
-        }
-
-        private void LoadButton_Click(object sender, RoutedEventArgs e)
-        {   
-            ToolsBar.Figures.Clear();
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Files(*.bin)|*.bin";
-            ofd.Title = "Открыть";
-            ofd.ShowDialog();
-            if (ofd.FileName != "")
-            {
-                Stream file = (FileStream)ofd.OpenFile();
-                BinaryFormatter deserializer = new BinaryFormatter();
-                ToolsBar.Figures = (List<Figure>)deserializer.Deserialize(file);
-                file.Close();
-                Invalidate();
-            }
-            ToolsBar.ConditionsCanvas.Clear();
-            ToolsBar.ConditionNumber = 0;
-            ToolsBar.AddCondition();
-            gotoPastCondition.IsEnabled = false;
-            gotoSecondCondition.IsEnabled = false;
-        }
-
-
         private void gotoPastCondition_Click(object sender, RoutedEventArgs e)
         {
             ToolsBar.gotoPastCondition();
